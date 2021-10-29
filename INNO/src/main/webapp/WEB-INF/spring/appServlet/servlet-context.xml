@@ -3,9 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -13,7 +15,28 @@
 	<annotation-driven />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
-	<resources mapping="/resources/**" location="/resources/" />
+	<!-- 	<resources mapping="/resources/**" location="/resources/" /> -->
+	<resources mapping="/assets/**" location="/WEB-INF/views/assets/" />
+	
+		<!-- 스케줄링 어노테이션 선언 -->
+<!-- 		<task:annotation-driven /> -->
+			
+		<!-- 스케줄러로 동작할 객체 생성 -->
+<!-- 		<beans:bean id="scheduleJob" class="kr.co.INNO.scheduler.Scheduler" /> -->
+		<!--  생성한 스케줄러 객체에 대한 작업 스케줄 지정 -->
+		<!-- method 이름을 지정하고 cron값을 수정하여 원하는 타이밍에 스케줄러를 동작시킨다.-->
+		<!-- task:scheduled 태그를 여러 개 생성하여 여러 개의 스케줄러를 동시에 지정할 수도 있다.-->
+<!-- 		<task:scheduled-tasks> -->
+<!-- 			<task:scheduled ref="scheduleJob" method="everySeconds" cron="* * * * * ?" /> -->
+<!-- 		</task:scheduled-tasks> -->
+		
+		<!-- 인터셉터 -->
+<!-- 		<interceptors> -->
+<!-- 			<interceptor> -->
+<!-- 				<mapping path="/**" /> -->
+<!-- 				<beans:bean id="appInterceptor" class="kr.co.INNO.interceptor.AppInterceptor" /> -->
+<!-- 			</interceptor> -->
+<!-- 		</interceptors> -->
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -21,8 +44,13 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="kr.co.INNO" />
+
+<!-- 	<context:component-scan base-package="kr.co.INNO" /> -->
 	
+	<context:component-scan base-package="kr.co.INNO.controller" />
+	<context:component-scan base-package="kr.co.INNO.service" />
+	<context:component-scan base-package="kr.co.INNO.vo" />	
+	<context:component-scan base-package="kr.co.INNO.sqlmap" />		
 	
 	
 </beans:beans>
